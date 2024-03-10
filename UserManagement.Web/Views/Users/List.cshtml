@@ -32,7 +32,7 @@
                         @item.Email
                     </td>
 					<td>
-						@item.DateofBirth
+						@item.DateofBirth.ToString("MM/dd/yyyy")
 					</td>
                     <td>
                         @(item.IsActive ? "Yes" : "No")
@@ -43,9 +43,9 @@
                                 Actions
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="btnToggleActions">
-                                <li><a class="dropdown-item" href="#">View</a></li>
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("View","Users",new{ id = item.Id})">View</a></li>
+								<li><a class="dropdown-item" href="@Url.Action("Edit","Users",new{ id = item.Id})">Edit</a></li>
+							<li><a class="dropdown-item" href="@Url.Action("Delete","Users",new{ id = item.Id})">Delete</a></li>
                             </ul>
                         </div>
                     </td>
@@ -62,8 +62,9 @@
 		<a asp-controller="Users" asp-action="List_InActive" class="btn btn-default">Non Active</a>
     </div>
 
-    <a href="#" class="btn btn-primary float-end">
+	<a asp-controller="Users" asp-action="add" class="btn btn-primary float-end">
         Add User
     </a>
+
 </div>
 
