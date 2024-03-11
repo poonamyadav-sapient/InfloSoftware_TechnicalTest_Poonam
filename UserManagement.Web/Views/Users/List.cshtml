@@ -45,7 +45,8 @@
                             <ul class="dropdown-menu" aria-labelledby="btnToggleActions">
                                 <li><a class="dropdown-item" href="@Url.Action("View","Users",new{ id = item.Id})">View</a></li>
 								<li><a class="dropdown-item" href="@Url.Action("Edit","Users",new{ id = item.Id})">Edit</a></li>
-							<li><a class="dropdown-item" href="@Url.Action("Delete","Users",new{ id = item.Id})">Delete</a></li>
+								<li><a class="dropdown-item" href="@Url.Action("Delete","Users",new{ id = item.Id})">Delete</a></li>
+								<li><a class="dropdown-item" href="@Url.Action("Details","Logs",new{ id = item.Id})">View Logs</a></li>
                             </ul>
                         </div>
                     </td>
@@ -58,13 +59,16 @@
 <div>
     <div class="btn-group" role="group">
         <a asp-controller="Users" asp-action="List" class="btn btn-default">Show All</a>
-		<a asp-controller="Users" asp-action="List_Active" class="btn btn-defaul">Active Only</a>
+		<a asp-controller="Users" asp-action="List_Active" class="btn btn-default">Active Only</a>
 		<a asp-controller="Users" asp-action="List_InActive" class="btn btn-default">Non Active</a>
     </div>
 
 	<a asp-controller="Users" asp-action="add" class="btn btn-primary float-end">
         Add User
     </a>
+	<a asp-controller="Logs" asp-action="List" class="btn btn-primary float-end">
+		All User Log Details
+	</a>
 
 </div>
 

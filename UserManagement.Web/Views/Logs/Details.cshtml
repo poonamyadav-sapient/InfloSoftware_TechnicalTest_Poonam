@@ -1,0 +1,21 @@
+﻿@model UserManagement.Web.Models.Log.LogItemModel
+<h2> Log User Details</h2>
+
+<div>
+	<dl class="row">
+		<dt class="col-sm-2">ID</dt>
+		<dd class="col-sm-10">@Model.Id</dd>
+
+		<dt class="col-sm-2">Timestamp</dt>
+		<dd class="col-sm-10">@Model.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</dd>
+
+		<dt class="col-sm-2">Action Type</dt>
+		<dd class="col-sm-10">@Model.ActionType</dd>
+
+		<dt class="col-sm-2">User Id</dt>
+		<dd class="col-sm-10">@Model.UserId</dd>
+
+		<dt class="col-sm-2">Details</dt>
+		<dd class="col-sm-10">@Model.Details</dd>
+	</dl>
+</div>

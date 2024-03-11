@@ -44,5 +44,6 @@ public class UserControllerTests
     }
 
     private readonly Mock<IUserService> _userService = new();
-    private UsersController CreateController() => new(_userService.Object);
+    private readonly Mock<DataContext> _contextService = new();
+    private UsersController CreateController() => new(_userService.Object, _contextService.Object);
 }
