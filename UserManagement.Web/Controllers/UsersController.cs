@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UserManagement.Data;
 using UserManagement.Models;
 using UserManagement.Services.Domain.Interfaces;
@@ -80,6 +81,21 @@ public class UsersController : Controller
         return View("List", model);
     }
 
+    private void LogAction(string actionType, long userId, string details)
+    {
+        var log = new Log
+        {
+            Timestamp = DateTime.Now,
+            ActionType = actionType,
+            UserId = userId,
+            Details = details
+        };
+
+        _dataContext?.Log?.Add(log);
+        _dataContext?.SaveChanges();
+
+    }
+
     [HttpGet("add")]
     public IActionResult Add()
     {
@@ -101,6 +117,7 @@ public class UsersController : Controller
             };
             _dataContext.Add(newUser);
             _dataContext.SaveChanges();
+            LogAction("AddUser", newUser.Id, "New user added:" + newUser.Forename + " " + newUser.Surname);
 
             return RedirectToAction("List");
         }
@@ -126,6 +143,7 @@ public class UsersController : Controller
             IsActive = user.IsActive
 
         };
+        LogAction("ViewUser", user.Id, "Recently given user view profile:" + user.Forename + " " + user.Surname);
         return View(viewModel);
     }
 
@@ -171,6 +189,7 @@ public class UsersController : Controller
         user.IsActive = model.IsActive;
 
         _dataContext.Update(user);
+        LogAction("Edit User Details", user.Id, "Given user details has been updated:" + user.Forename + " " + user.Surname);
         return RedirectToAction("List");
     }
     [HttpGet("Delete/{id}")]
@@ -205,6 +224,7 @@ public class UsersController : Controller
 
           
         _dataContext.Delete(user);
+        LogAction("Deleteuser", user.Id, "Given user detail has been deleted:" + user.Forename + " " + user.Surname);
         return RedirectToAction("List");
     }
 }
