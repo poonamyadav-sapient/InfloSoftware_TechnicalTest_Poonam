@@ -1,0 +1,42 @@
+﻿@page "/users/edit/{Id}"
+@inject UserService userService
+@using ExtentApplication_UserManagement.Components.Models
+
+<h1>Edit User</h1>
+
+<EditForm Model="@user" OnValidSubmit="UpdateUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="user.Username" />
+    <InputText @bind-Value="user.Email" />
+    <!-- Add other input fields for user properties -->
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private User? user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await userService.GetUserById(Id);
+    }
+
+    private async Task UpdateUser()
+    {
+        // Call the service method to update user
+        var result = await userService.UpdateUser(user);
+        if (result)
+        {
+            // Redirect to user list page or show success message
+        }
+        else
+        {
+            // Show error message
+        }
+    }
+}

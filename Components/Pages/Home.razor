@@ -1,7 +1,16 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
-<PageTitle>Home</PageTitle>
+<h1 class="text-center">Welcome to User Management</h1>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <p class="lead text-center">This is the landing page of the user management application.</p>
+            <div class="text-center">
+                <a href="/register" class="btn btn-primary mx-2">Register</a>
+                <a href="/login" class="btn btn-success mx-2">Login</a>
+            </div>
+        </div>
+    </div>
+</div>

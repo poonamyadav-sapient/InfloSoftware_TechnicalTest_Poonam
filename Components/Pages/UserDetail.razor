@@ -1,0 +1,72 @@
+﻿@page "/users/detail/{userId}"
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@using ExtentApplication_UserManagement.Components.Models
+<h3>User Detail</h3>
+
+@if (user != null)
+{
+    <div>
+        <p><strong>User ID:</strong> @user.Id</p>
+        <p><strong>Username:</strong> @user.Username</p>
+        <p><strong>Email:</strong> @user.Email</p>
+        <p><strong>Registration Date:</strong> @user.RegistrationDate</p>
+    </div>
+
+    <button class="btn btn-danger" @onclick="DeleteUser">Delete User</button>
+}
+else
+{
+    <p>Loading user details...</p>
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    private User? user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUserDetails();
+    }
+
+    private async Task LoadUserDetails()
+    {
+        try
+        {
+            // Call the API to get user details by user ID
+            user = await httpClient.GetFromJsonAsync<User>($"api/users/{UserId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading user details: {ex.Message}");
+            // You may want to handle error scenarios, e.g., displaying an error message
+        }
+    }
+
+    private async Task DeleteUser()
+    {
+        try
+        {
+            var response = await httpClient.DeleteAsync($"api/users/{UserId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Handle successful deletion
+                navigationManager.NavigateTo("/users");
+            }
+            else
+            {
+                // Handle deletion failure
+                // You might want to display an error message here
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions that might occur during the HTTP request
+            Console.WriteLine($"Error deleting user: {ex.Message}");
+            // You may want to display an error message or handle the error in another way
+        }
+    }
+}

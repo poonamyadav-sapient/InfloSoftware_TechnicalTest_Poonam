@@ -1,0 +1,34 @@
+﻿@page "/users/add"
+@inject UserService userService
+@using ExtentApplication_UserManagement.Components.Models
+
+<h1>Add User</h1>
+
+<EditForm Model="@user" OnValidSubmit="HandleAddUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="user.Username" />
+    <InputText @bind-Value="user.Email" />
+    <!-- Add other input fields for user properties -->
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private User user = new User();
+
+    private async Task HandleAddUser()
+    {
+        // Call the service method to add user
+        var result = await userService.AddUser(user);
+        if (result)
+        {
+            // Redirect to user list page or show success message
+        }
+        else
+        {
+            // Show error message
+        }
+    }
+}

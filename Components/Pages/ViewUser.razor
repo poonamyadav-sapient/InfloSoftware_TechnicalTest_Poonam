@@ -1,0 +1,19 @@
+﻿@page "/users/{Id}"
+@inject UserService userService
+@using ExtentApplication_UserManagement.Components.Models
+<h1>User Details</h1>
+
+<p>Username: @user?.Username</p>
+<p>Email: @user?.Email</p>
+<!-- Add other details to display -->
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private User? user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await userService.GetUserById(Id);
+    }
+}

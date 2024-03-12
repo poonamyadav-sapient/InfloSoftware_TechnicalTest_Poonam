@@ -1,0 +1,50 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@inject UserService userService
+@inject NavigationManager navigationManager
+@using ExtentApplication_UserManagement.Components.Models
+
+<h1>Login</h1>
+<form>
+<EditForm Model="@loginModel" OnValidSubmit="LoginUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="InputEmail">Email address</label>
+        <InputText id="InputEmail" class="form-control" @bind-Value="loginModel.Email" />
+    </div>
+    <div class="form-group">
+        <label for="InputPassword">Password</label>
+        <InputText id="InputPassword" class="form-control" type="password" @bind-Value="loginModel.Password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+</form>
+
+@if (loginResult != null)
+{
+    @if (loginResult.Value)
+    {
+        <p>Login successful. Redirecting...</p>
+        @if (loginResult.Value)
+        {
+            navigationManager.NavigateTo("/dashboard");
+        }
+    }
+    else
+    {
+        <p>Login failed. Please check your credentials and try again.</p>
+    }
+}
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool? loginResult;
+
+    private async Task LoginUser()
+    {
+        loginResult = await userService.LoginAsync(loginModel);
+    }
+}
